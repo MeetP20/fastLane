@@ -1,0 +1,79 @@
+
+platform :ios do
+  desc "Signing Code"
+  lane :signing do
+    match
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+  desc "Building Code"
+  lane :build do
+    signing #calls lane signing
+    gym
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+  desc "Build upload for tester"
+  lane :build_test do
+    build #calls lane signing
+    pilot #nexus_upload can also be used
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+  desc "Releasing Code"
+  lane :release do
+    build_test #calls lane build
+    deliver
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+end
+
+platform :mac do
+  desc "Signing Code"
+  lane :signing do
+    match
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+  desc "Building Code"
+  lane :build do
+    signing #calls lane signing
+    gym
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+  desc "Build upload for tester"
+  lane :build_test do
+    build #calls lane signing
+    pilot #nexus_upload can also be used
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+  desc "Releasing Code"
+  lane :release do
+    build_test #calls lane build
+    deliver
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+end
+
+platform :android do
+  desc "Signing Code"
+  lane :signing do
+    import_certificate
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+  desc "Building Code"
+  lane :build do
+    signing #calls lane signing
+    gradle
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+  desc "Build upload for tester"
+  lane :build_test do
+    build #calls lane signing
+    nexus_upload
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+  
+  desc "Releasing Code"
+  lane :release do
+    build_test #calls lane build
+    supply
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+end
